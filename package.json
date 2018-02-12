@@ -1,0 +1,38 @@
+{
+  "name": "node_mongodb-newsscrapper",
+  "version": "1.0.0",
+  "description": "Get the latest news with this news scraper, save articles for later reviewing and add comments to your saved articles",
+  "main": "app.js",
+  "scripts": {
+    "test": "test this",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpdevspace/Node_MongoDB-NewsScrapper.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "mongodb",
+    "mongoose",
+    "cheerio",
+    "web",
+    "scrapper",
+    "news"
+  ],
+  "author": "Jean Paul Giraldo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpdevspace/Node_MongoDB-NewsScrapper/issues"
+  },
+  "homepage": "https://github.com/jpdevspace/Node_MongoDB-NewsScrapper#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.0.3",
+    "request": "^2.83.0"
+  }
+}
