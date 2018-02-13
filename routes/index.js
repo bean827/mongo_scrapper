@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const request = require('request'); // to easily make HTTP request
-const cheerio = require("cheerio"); // Scraping tool
+const request = require('request'); 
+const cheerio = require("cheerio"); 
 const Articles = require('../models/Articles');
 const Comments = require('../models/Comments');
 
@@ -10,34 +10,36 @@ router.get('/', (req, res) => {
     res.render('index', { mainPage: true} );
 });
 
-// GET '/scrape' Scrape news websites
+// GET '/scrape' 
 router.get('/scrape', (req, res) => { 
-    // Empty db
     Articles.remove({saved: false}).exec();
-    
-    const wiredURL = "https://www.wired.com/most-recent/";  // Making the request to get the HTML
 
-    request(wiredURL, (err, response, html) => {    // Making request to get the HTML code
+    //My problems are here. i have tried numerous websites and when they all didn't work, i stuck to trying to get my fav
+    //web page to work, and it isn't.
+    
+    const motogpURL = "https://www.motogp.com/en/";  // Making the request to get the HTML
+
+    request(motogpURL, (err, response, html) => {    // Making request to get the HTML code
         if (err) { console.log(error) };    // Check for errors
         
-        const $ = cheerio.load(html);  // Load the HTML into Cheerio 
+        const $ = cheerio.load(html); 
         
-        let wiredResult = [];   // To store all the results to then save them in DB
-        let wiredParentSelector = "li.archive-item-component";  // The parent selector element to use
+        let motogpResult = [];   // store results to move to dB
+        let motogpParentSelector = "row_1"; 
 
-        $(wiredParentSelector).each( (i, element) => {
-            wiredResult.push({
-                title: $(element).find('h2.archive-item-component__title').text(),
-                body: $(element).find('p.archive-item-component__desc').text(),
+        $(motogpParentSelector).each( (i, element) => {
+            motogpResult.push({
+                title: $(element).find('thumb_container.h2').text(),
+                body: $(element).find('thumb_container.summary').text(),
                 url: $(element).find('a').attr('href'),
-                source: "Wired",
+                source: "MotoGP",
                 saved: false
             });
         });
 
         
 
-        Articles.create(wiredResult)
+        Articles.create(motogpResult)
             .then( dbArticle => {
                 res.render('scrape', {articles: dbArticle, title: "Check the results"});
             })
@@ -48,7 +50,7 @@ router.get('/scrape', (req, res) => {
     });
 });
 
-// GET '/save/:id' Saves article for later viewing
+// GET '/save/:id' Saves article 
 router.put('/save/:articleID', (req, res) => {
     Articles.findByIdAndUpdate(req.params.articleID, { $set: {saved: true} }, { new: true })
         .then( article => {
@@ -72,7 +74,7 @@ router.get('/save', (req, res) => {
         })
 });
 
-// POST '/save/comments/:postCommentID' Create comments for a specific article
+// POST '/save/comments/:postCommentID' Create comments 
 router.post('/save/comments/:postCommentID', (req, res) => {
     Comments.create(req.body)
         .then(dbComment => Articles.findByIdAndUpdate(req.params.postCommentID, { comments: dbComment._id }, { new: true}))
@@ -80,7 +82,7 @@ router.post('/save/comments/:postCommentID', (req, res) => {
         .catch( err => console.error(err));
 });
 
-// GET '/save/comments/:getCommentID' Display comments for a specific article
+// GET '/save/comments/:getCommentID' Display comments 
 router.get('/save/comments/:getCommentID', (req, res) => {
     Articles.findById(req.params.getCommentID)
         .populate("comments")

@@ -1,4 +1,3 @@
-+function($) {
     $(function() {
 
         const newsScraper = {
@@ -72,21 +71,21 @@
                 setTimeout( () => { this.divMyAlert.empty() }, 3000);
             },
             commentModalFn (e) {
-                const button = $(e.relatedTarget); // Btn that triggered the modal
-                const docID = button.data('dbid') // Extract info from data-* attributes
+                const button = $(e.relatedTarget); // Btn that triggers the modal
+                const docID = button.data('dbid') 
  
-                this.commentForm.attr("action", `/save/comments/${docID}`);  // Update the modal's content
+                this.commentForm.attr("action", `/save/comments/${docID}`);  // Update modal
                 this.getComments(docID);
             },
             getComments (id) {
-                // Remove any previous comments
+                // delete previous comments
                 this.modalFooter.empty();
-                // Get comments from the clicked article
+                // Get comments from article
                 $.ajax({
                     type: 'GET',
                     url: `/save/comments/${id}`,
                     success: response => {
-                        // Add comment to the page
+                        // Add comment 
                         response.comments.forEach(element => {
                             let comment = 
                                 $(`
@@ -131,4 +130,3 @@
 
         newsScraper.init();
     });
-}(jQuery)
