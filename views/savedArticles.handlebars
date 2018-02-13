@@ -1,0 +1,64 @@
+<div class="container">
+    <section id="main">
+        {{#if articles}}
+        <h2>Wired</h2>
+        <div id="accordion">
+            {{#each articles}}
+            <div class="card" data-dbid="{{this._id}}">
+                <div class="card-header" id="heading{{@index}}">
+                    <h3 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{@index}}" aria-expanded="true" aria-controls="collapse{{@index}}">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <i class="fas fa-angle-down"></i> {{this.title}}
+                                </div>
+                                <div class="article-options">
+                                    <i class="fas fa-comment fa-lg" 
+                                        data-toggle="modal" 
+                                        data-target="#commentModal" 
+                                        data-dbid="{{this._id}}"></i> |
+                                    <i class="fas fa-trash-alt fa-lg"></i>
+                                </div>
+                            </div>
+                        </button>
+                    </h3>
+                </div>
+                <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#accordion">
+                    <div class="card-body">
+                        {{this.body}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+    </section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title" id="commentModalLabel">Add Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="commentForm" action="" method="POST">
+                    <div class="form-group">
+                        <label for="article-comment" class="col-form-label">Type your comment</label>
+                        <textarea class="form-control" id="recipient-name" name="articleComment"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    
+                </form>
+            <br />
+            <div class="modal-footer"></div>
+                
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="container">
+  <section id="main">
+    {{#if articles}}
+    <h2>Wired</h2>
+    <div id="accordion">
+      {{#each articles}}
+        <div class="card" data-dbid="{{this._id}}">
+          <div class="card-header" id="heading{{@index}}">
+            <h3 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{@index}}" aria-expanded="true" aria-controls="collapse{{@index}}">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <i class="fas fa-angle-down"></i> {{this.title}}
+                  </div>
+                  <div class="article-options">
+                    <i class="fas fa-bookmark fa-lg"></i>
+                  </div>
+                </div>
+              </button>
+            </h3>
+          </div>
+          <div id="collapse{{@index}}" class="collapse" aria-labelledby="heading{{@index}}" data-parent="#accordion">
+            <div class="card-body">
+              {{this.body}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </section>
+</div>
