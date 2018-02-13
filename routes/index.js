@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const request = require('request'); 
 const cheerio = require("cheerio"); 
-const Articles = require('../models/Articles');
-const Comments = require('../models/Comments');
+const Articles = require('../models/articles');
+const Comments = require('../models/comments');
 
 // GET '/' Display main page
 router.get('/', (req, res) => {
